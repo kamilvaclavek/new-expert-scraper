@@ -1,5 +1,5 @@
 # https://crawlee.dev/docs/guides/docker-images
-FROM apify/actor-node:16 AS builder
+FROM apify/actor-node:20 AS builder
 
 COPY package*.json ./
 
@@ -9,7 +9,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM apify/actor-node:16
+FROM apify/actor-node:20
 
 COPY --from=builder /usr/src/app/dist ./dist
 
