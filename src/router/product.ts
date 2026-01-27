@@ -12,13 +12,7 @@ function parseVariant($option: Cheerio<Element>) {
   return { variantName, price };
 }
 
-export const productHandler: Handler = ({
-  $,
-  request,
-  enqueueLinks,
-  pushData,
-  log,
-}) => {
+export const productHandler: Handler = ({ $, request, pushData, log }) => {
   log.info(`Product detail page: ${request.url}`);
 
   const $price = $(selectors.PRODUCT_PRICE).contents().last();

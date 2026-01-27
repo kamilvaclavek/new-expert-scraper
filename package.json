@@ -12,7 +12,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^25.0.10"
+    "@types/node": "^25.0.10",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "apify": "^3.5.3",
