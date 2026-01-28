@@ -6,15 +6,14 @@ class ASINTracker {
 
   constructor() {
     this.state = {};
+  }
 
+  async initialize() {
     Actor.on("persistState", async () => {
       await Actor.setValue(ASIN_TRACKER, this.state);
     });
 
-    setInterval(() => console.log(this.state), 10000);
-  }
-
-  async initialize() {
+    setInterval(() => console.log("ASIN tracker state: \n", this.state), 10000);
     this.state = (await Actor.getValue(ASIN_TRACKER)) ?? this.state;
   }
 

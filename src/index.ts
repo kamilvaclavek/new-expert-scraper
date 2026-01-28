@@ -1,15 +1,14 @@
-import { CheerioCrawler } from "crawlee";
 import { Actor } from "apify";
-import { router } from "./router/index.js";
 import { labels } from "./constants.js";
+import { CheerioCrawler } from "crawlee";
 import { tracker } from "./asin_tracker.js";
+import { crawlerConfiguration } from "./crawler_configuration.js";
+import { statistics } from "./statistics.js";
 
 await Actor.init();
 await tracker.initialize();
 
-const crawler = new CheerioCrawler({
-  requestHandler: router,
-});
+const crawler = new CheerioCrawler(crawlerConfiguration);
 
 await crawler.run([
   {
@@ -18,7 +17,9 @@ await crawler.run([
   },
 ]);
 
-console.log("ASIN tracker state: \n");
+console.log("ASIN tracker final state: \n");
 console.log(tracker.state);
+console.log("\n\nStatistics final state: \n");
+console.log(statistics.state);
 
 await Actor.exit();

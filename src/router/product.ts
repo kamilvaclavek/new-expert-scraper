@@ -2,6 +2,7 @@ import type { Cheerio, Element } from "crawlee";
 import type { Handler, PriceRange } from "../types.js";
 import { selectors } from "../constants.js";
 import { tracker } from "../asin_tracker.js";
+import { statistics } from "../statistics.js";
 
 function parseVariant($option: Cheerio<Element>) {
   const sku = $option.attr("data-sku") ?? "";
@@ -14,7 +15,14 @@ function parseVariant($option: Cheerio<Element>) {
   return { sku, variantName, price };
 }
 
-export const productHandler: Handler = ({ $, request, pushData, log }) => {
+export const productHandler: Handler = async ({
+  $,
+  request,
+  pushData,
+  log,
+  requestQueue,
+  crawler,
+}) => {
   log.info(`Product detail page: ${request.url}`);
 
   const sku = $(selectors.PRODUCT_SKU).text().trim();
@@ -44,18 +52,24 @@ export const productHandler: Handler = ({ $, request, pushData, log }) => {
     variantName: null,
     sku,
     productId,
+    dateHandled: request.handledAt || new Date().toISOString(),
+    numberOfRetries: request.retryCount,
+    currentPendingRequests: await (crawler.requestQueue as any).getInfo()
+      .pendingRequestCount,
   };
 
   const $variants = $(selectors.PRODUCT_VARIANTS);
   if ($variants.length === 0) {
     log.info("Saving a product");
     tracker.incrementASIN(productId);
+    statistics.success();
     pushData(item);
   } else {
     for (const element of $variants.toArray()) {
       const variant = parseVariant($(element) as Cheerio<Element>);
       log.info("Saving a product variant");
       tracker.incrementASIN(productId);
+      statistics.success();
       pushData({ ...item, ...variant });
     }
   }

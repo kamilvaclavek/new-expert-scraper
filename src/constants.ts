@@ -14,3 +14,4 @@ export const selectors = {
 };
 
 export const ASIN_TRACKER = "ASIN_TRACKER";
+export const STATISTICS = "STATISTICS";
