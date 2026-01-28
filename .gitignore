@@ -2,3 +2,5 @@ node_modules
 dist
 storage
 .venv
+.env
+mise.toml

@@ -26,4 +26,4 @@ RUN npm --quiet set progress=false \
 
 COPY . ./
 
-CMD npm run start --silent
+CMD npm run start:prod --silent
