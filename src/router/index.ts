@@ -5,10 +5,10 @@ import { labels } from "../constants.js";
 import { productHandler } from "./product.js";
 import { startHandler } from "./start.js";
 
-const r = createCheerioRouter();
+const router = createCheerioRouter();
 
-r.addHandler(labels.START, startHandler);
+router.addHandler(labels.START, startHandler);
 
-r.addHandler(labels.PRODUCT, productHandler);
+router.addHandler(labels.PRODUCT, productHandler);
 
-export const router = r;
+export { router };
