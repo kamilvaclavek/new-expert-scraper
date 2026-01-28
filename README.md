@@ -1,15 +1,9 @@
 # New Expert Scraper
 
-### Prerequisities
-
-- Node.js
-- Apify CLI
-
 ### Development
 
 ```bash
 npm i #install dependencies
-npm run build #build the project
 apify run #run locally
 ```
 
