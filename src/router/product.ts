@@ -54,8 +54,8 @@ export const productHandler: Handler = async ({
     productId,
     dateHandled: request.handledAt || new Date().toISOString(),
     numberOfRetries: request.retryCount,
-    currentPendingRequests: await (crawler.requestQueue as any).getInfo()
-      .pendingRequestCount,
+    currentPendingRequests: (await crawler.requestQueue?.getInfo())
+      ?.pendingRequestCount,
   };
 
   const $variants = $(selectors.PRODUCT_VARIANTS);
